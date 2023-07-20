@@ -1,107 +1,83 @@
-let clock1 = document.getElementsByClassName("b");
-let option = document.getElementsByTagName("option");
-let GM = document.getElementsByClassName("breakfast");
-let AM = document.getElementsByClassName("AM");
+let hours = document.getElementById("hrs");
+let minutes = document.getElementById("mins");
+let seconds = document.getElementById("secs");
+let AMPM = document.querySelector(".sub7");
 
-function callme() {
-  let time = new Date();
-  let hours = time.getHours();
-  let mins = time.getMinutes();
-  let secs = time.getSeconds();
+let wakeup = document.querySelector(".good1");
+let message = document.querySelector(".box6");
 
-  if (hours > 12) {
-    hours = hours - 12;
-    AM[0].innerText = "PM";
+function theTimer() {
+  let date = new Date();
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  let seconds = date.getSeconds();
+  hours.innerHTML = hours;
+  minutes.innerHTML = minutes;
+  seconds.innerHTML = seconds;
+
+  //content below the clock
+  if (hours >= 4 && hours < 10) {
+    message.innerHTML = "GRAB SOME HEALTHY BREAKFAST!!!";
+  } else if (hours >= 10 && hours < 16) {
+    message.innerHTML = " LET'S HAVE SOME LUNCH !!";
+  } else if (hours >= 16 && hours < 20) {
+    message.innerHTML = "STOP YAWNING, GET SOME TEA.. ITS JUST EVENING!";
   } else {
-    AM[0].innerHTML = "AM";
+    message.innerHTML = "CLOSE YOUR EYES AND GO TO SLEEP";
   }
 
-  let timezone = ` ${hours} Hours `;
-  let timezone1 = ` ${mins} Mins`;
-  let timezone2 = ` ${secs} Secs`;
-  console.log(hours, mins, secs);
-  clock1[0].innerText = timezone;
-  clock1[1].innerText = timezone1;
-  clock1[2].innerText = timezone2;
-
-  if (hours > 1 && hours <= 3) {
-    GM[0].innerText = "LET HAVE SOME LUNCH";
-  } else if (hours > 3 && hours <= 5) {
-    GM[0].innerText = "STOP YAWNING, GET SOME TEA... ITS JUST EVENING";
-  } else if (hours > 5 && hours <= 8) {
-    GM[0].innerText = "LETS GO AND PLAY CRICKET";
-  } else if (hours > 8 && hours <= 9) {
-    GM[0].innerText = "LET HAVE DINNER ";
-  } else if (hours > 9 && hours <= 10) {
-    GM[0].innerText = "CLOSE YOUR EYES AND GO TO SLEEP";
-  } else {
-    GM[0].innerText = "GRAB SOME HEALTHY BREAKFAST!!!";
+  //12 hrs format
+  if (hours.innerHTML > 12) {
+    hours.innerHTML = hours.innerHTML - 12;
+    AMPM.innerHTML = "PM";
   }
 }
-
 setInterval(() => {
-  callme();
+  theTimer();
 }, 1000);
 
-let party = document.getElementById("party");
+but1 = document.querySelector(".set1");
 
-party.addEventListener("mouseover", () => {
-  party.innerText = "Party Time!";
-});
+but1.addEventListener("click", () => {
+  let date = new Date();
+  let hours = date.getHours();
 
-party.addEventListener("mouseout", () => {
-  party.innerText = "Set Alarm";
-});
+  let img = document.querySelector("#theImage");
 
-let photo = document.getElementsByClassName("image");
-let MG = document.getElementsByClassName("gm");
-let morn = document.getElementById("change1");
-let aft = document.getElementById("change2");
-let eve = document.getElementById("change3");
-let night = document.getElementById("change4");
+  let night = document.getElementById("night");
+  let ntext = night.options[night.selectedIndex].textContent;
+  let nPrint = document.querySelector("#nighttime");
+  nPrint.textContent = ntext;
 
-function setAlarm() {
-  let time = new Date();
-  let hours = time.getHours();
+  let nap = document.getElementById("nap");
+  let naptext = nap.options[nap.selectedIndex].textContent;
+  let napPrint = document.querySelector("#naptime");
+  napPrint.textContent = naptext;
 
-  let wakeTime =
-    document.getElementById("change1").options[
-      document.getElementById("change1").selectedIndex
-    ].text;
-  let lunchTime =
-    document.getElementById("change2").options[
-      document.getElementById("change2").selectedIndex
-    ].text;
-  let napTime =
-    document.getElementById("change3").options[
-      document.getElementById("change3").selectedIndex
-    ].text;
-  let nightTime =
-    document.getElementById("change4").options[
-      document.getElementById("change4").selectedIndex
-    ].text;
+  let lunch = document.getElementById("lunch");
+  let ltext = lunch.options[lunch.selectedIndex].textContent;
+  let lPrint = document.querySelector("#lunchtime");
+  lPrint.textContent = ltext;
 
-  // Update the text content of the guide div
-  document.getElementById("wakeTime").textContent = wakeTime;
-  document.getElementById("lunchTime").textContent = lunchTime;
-  document.getElementById("napTime").textContent = napTime;
-  document.getElementById("nightTime").textContent = nightTime;
+  let morn = document.getElementById("morning");
+  let mtext = morn.options[morn.selectedIndex].textContent;
+  let mPrint = document.querySelector("#waketime");
+  mPrint.textContent = mtext;
 
-  if (hours === parseInt(morn.value)) {
-    MG[0].innerText = "GOOD MORNING!!WAKE UP!!";
-    GM[0].innerText = "GRAB SOME HEALTHY BREAKFAST!!!";
-    photo[0].style.backgroundImage = "url('goodmorning.jpg')";
-  } else if (hours === parseInt(aft.value)) {
-    MG[0].innerText = "GOOD AFTERNOON!! TAKE SOME SLEEP";
-    GM[0].innerText = "LETS HAVE SOME LUNCH";
-    photo[0].style.backgroundImage = "url('component31.jpg')";
-  } else if (hours === parseInt(eve.value)) {
-    MG[0].innerText = "GOOD EVENING!!";
-    GM[0].innerText = "STOP YAWNING, GET SOME TEA... ITS JUST EVENING";
-    photo[0].style.backgroundImage = "url('./lunch_image.jpg')";
-  } else if (hours === parseInt(night.value)) {
-    MG[0].innerText = "GOOD NIGHT!!";
-    GM[0].innerText = "CLOSE YOUR EYES AND GO TO SLEEP";
-    photo[0].style.backgroundImage = "url('./goodnight_image.jpg')";
+  //change the text and image based on selection
+
+  if (parseInt(morn.value) === hours) {
+    wakeup.innerHTML = "GOOD MORNING!! WAKE UP !!";
+    img.src = "./Component 30 – 1.png";
+  } else if (parseInt(lunch.value) === hours) {
+    wakeup.innerHTML = "GOOD AFTERNOON !! TAKE SOME SLEEP";
+    img.src = "./Component 31 – 1.png";
+  } else if (parseInt(nap.value) === hours) {
+    wakeup.innerHTML = "GOOD EVENING !!";
+    img.src = "./lunch_image.png";
+  } else if (parseInt(night.value) === hours) {
+    wakeup.innerHTML = "GOOD NIGHT !!";
+    img.src = "./Component 32 – 1.png";
+    console.log(wakeup.innerHTML);
   }
-}
+});
